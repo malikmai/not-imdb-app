@@ -1,9 +1,11 @@
 import { useState } from "react";
 import * as movieService from './services/movieService.js'
 import { useEffect } from "react";
+import HomePage from "./components/HomePage/HomePage.jsx";
 
 const App = () => {
   const [movieList, setMovieList] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -13,10 +15,13 @@ const App = () => {
     fetchMovies();
   }, []);
 
+  const updateSelected = (movie) => {
+    setSelectedMovie(movie);
+  };
   
   return (
     <> 
-    <h1>Welcome to the Not-International-Movie-Database!</h1>
+    <HomePage movieList={movieList} updateSelected={updateSelected} />
     </>
   )
 };
