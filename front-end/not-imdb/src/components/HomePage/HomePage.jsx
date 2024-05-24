@@ -1,21 +1,18 @@
+const HomePage = ({movieList, setSelectedMovie}) => {
+    // const movies = props.movieList.map((movie) => (
+    //     <a key={movie._id} onClick={() => props.updateSelected(movie)}><li>{movie.title}</li></a>
+    //     <li key={movie._id} onClick={() => props.updateSelected(movie)}><a>{movie.title}</a></li>
+    // ));
 
-
-const HomePage = (props) => {
-    const handleClick = (event, movie) => {
-        event.preventDefault();
-        props.updateSelected(movie)
+    const handleClick = (movie) => {
+        setSelectedMovie(movie);
     }
-    const movies = props.movieList.map((movie) => (
-        <a href="" key={movie._id} onClick={(event) => handleClick(event, movie)}>
-            <li>{movie.title}</li>
-        </a>
-    ));
 
     return (
-        <>
-        <h1>Definitely Not IMDB</h1>
-        <ul>{movies}</ul>
-        </>
+        <div>
+            <h1>Definitely Not IMDB</h1>
+            <ul>{movieList.map((movie) => {return (<li key={movie._id}><a onClick={() => handleClick(movie)}>{movie.title}</a></li>)})}</ul>
+        </div>
     )
 }
 

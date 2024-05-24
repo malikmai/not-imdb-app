@@ -1,27 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as movieService from './services/movieService.js'
-import { useEffect } from "react";
 import HomePage from "./components/HomePage/HomePage.jsx";
+import MovieDetails from "./components/MovieDetails/MovieDetails.jsx";
 
 const App = () => {
   const [movieList, setMovieList] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState({});
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const data = await movieService.index();
-      setMovieList(data)
-    }
+      try {
+      const movies = await movieService.index();
+
+      if (movies.error) {
+        throw new Error(movies.error);
+      }
+
+      setMovieList(movies);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchMovies();
   }, []);
-
-  const updateSelected = (movie) => {
-    setSelectedMovie(movie);
-  };
   
   return (
     <> 
-    <HomePage movieList={movieList} updateSelected={updateSelected} />
+    <HomePage movieList={movieList} setSelectedMovie={setSelectedMovie} />
+    <MovieDetails selectedMovie={selectedMovie} />
     </>
   )
 };
