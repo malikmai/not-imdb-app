@@ -20,33 +20,50 @@
 // ---- Umang's code ----
 
 //---- Malik's Updates ----
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const HomePage = ({ movieList, setSelectedMovie }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false); // Keeps track of whether the menu is open or closed
+  const [searchQuery, setSearchQuery] = useState(""); // Keeps track of the search query
+  const [currentSlide, setCurrentSlide] = useState(0); // Keeps track of the current slide
 
   const handleClick = (movie) => {
     setSelectedMovie(movie);
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen(!menuOpen); // Toggles the menu open and closed
   };
 
   const handleSearch = (event) => {
-    setSearchQuery(event.target.value);
+    setSearchQuery(event.target.value); // Updates the search query based on the input
   };
 
   const filteredMovies = movieList.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase()) // Filters the movies based on the search query
   );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % 5); // Loops through the 5 slides, %5 ensures it doesn't go over 5
+    }, 6000); // Changes the slide every 6 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  const placeholderImages = [
+    "https://via.placeholder.com/400x200?text=Movie+1", // Placeholder image URLs
+    "https://via.placeholder.com/400x200?text=Movie+2",
+    "https://via.placeholder.com/400x200?text=Movie+3",
+    "https://via.placeholder.com/400x200?text=Movie+4",
+    "https://via.placeholder.com/400x200?text=Movie+5"
+  ];
 
   return (
     <div>
+    <div className="theNavSection">
       <nav className="navbar">
         <div className="hamburger" onClick={toggleMenu}>
-          ☰
+          ☰ 
         </div>
         {menuOpen && (
           <ul className="nav-links">
@@ -61,23 +78,30 @@ const HomePage = ({ movieList, setSelectedMovie }) => {
             </li>
           </ul>
         )}
-        <div className="site-title">Definitely Not IMDB</div>
+        <div className="site-title">Definitely <i>not</i> IMDB</div>
         <div className="search-bar">
           <input
             type="text"
             placeholder="Search Movies..."
             value={searchQuery}
-            onChange={handleSearch}
+            onChange={handleSearch} // Calls the handleSearch function when the input changes
           />
         </div>
       </nav>
-      <ul>
-        {filteredMovies.map((movie) => (
-          <li key={movie._id}>
-            <a onClick={() => handleClick(movie)}>{movie.title}</a>
-          </li>
-        ))}
-      </ul>
+      <hr></hr>
+      </div>
+      <main>
+        <div className="welcome-message">
+            <h1>Welcome to Definitely <i>not</i> IMDB</h1>
+            <p>Your one-stop shop for all things movies!</p>
+        </div>
+        <div className="show-card">
+          <img
+            src={placeholderImages[currentSlide]}
+            alt={`Slide ${currentSlide + 1}`} // Displays the current slide image
+          />
+        </div>
+      </main>
     </div>
   );
 };
