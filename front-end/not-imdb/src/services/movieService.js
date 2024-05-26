@@ -18,7 +18,7 @@ const create = async (FormData) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(FormData)
         });
-        return res.JSON();
+        return res.json();
     } catch (error) {
         console.log(error);
     }

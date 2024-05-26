@@ -36,15 +36,10 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div>
-      {/* {selectedMovie ? ( // Conditional rendering based on whether a movie is selected
-        <MovieDetails selectedMovie={selectedMovie} />
-      ) : (
-        <HomePage movieList={movieList} setSelectedMovie={setSelectedMovie} />
-      )} */}
       <h1>Definitely Not IMDB</h1>
       <MovieForm handleAddMovie={handleAddMovie} />
       <MovieDetails selectedMovie={selectedMovie} />

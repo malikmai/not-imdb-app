@@ -1,18 +1,22 @@
 const HomePage = ({ movieList, setSelectedMovie }) => {
-  const movies = movieList.map((movie) => (
-    <li key={movie._id} onClick={() => setSelectedMovie(movie)}><a>{movie.title}</a></li>
-  ));
-
   const handleClick = (event, movie) => {
     event.preventDefault();
     setSelectedMovie(movie);
-  }
+  };
 
   return (
     <div>
-      <ul>{movieList.map((movie) => { return (<li key={movie._id}><a href="" onClick={() => handleClick(event, movie)}>{movie.title}</a></li>) })}</ul>
+      <ul>
+        {movieList.map((movie) => (
+          <li key={movie._id}>
+            <a href="#" onClick={(event) => handleClick(event, movie)}>
+              {movie.title}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
-  )
+  );
 };
 
 export default HomePage;
