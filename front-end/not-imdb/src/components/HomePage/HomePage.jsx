@@ -1,7 +1,8 @@
-const HomePage = ({ movieList, setSelectedMovie }) => {
+const HomePage = ({ movieList, setSelectedMovie, setView }) => {
   const handleClick = (event, movie) => {
     event.preventDefault();
     setSelectedMovie(movie);
+    setView('details');
   };
 
   return (

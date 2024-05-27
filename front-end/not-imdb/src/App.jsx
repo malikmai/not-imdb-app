@@ -9,7 +9,7 @@ const App = () => {
   const [movieList, setMovieList] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
-  // const [view, setView] = useState('home');
+  const [view, setView] = useState('home');
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -73,10 +73,22 @@ const App = () => {
 
   return (
     <div>
+      <nav>
+        <button onClick={() => setView('list')}>Movie List</button>
+        <button onClick={() => setView('add')}>Add New Movie</button>
+      </nav>
       <h1>Definitely Not IMDB</h1>
-      <MovieForm handleAddMovie={handleAddMovie} />
-      {showUpdateForm ? (<UpdateMovieForm selectedMovie={selectedMovie} handleUpdateMovie={handleUpdateMovie} /> ) : (<MovieDetails selectedMovie={selectedMovie} handleUpdateMovie={handleUpdateMovie} handleDeleteMovie={handleDeleteMovie} showUpdateForm={setShowUpdateForm}/> )}
-      <HomePage movieList={movieList} setSelectedMovie={setSelectedMovie} />
+      {view === 'list' && (
+        <HomePage movieList={movieList} setSelectedMovie={setSelectedMovie} setView={setView} />
+      )}
+      {view === 'add' && (
+        <MovieForm handleAddMovie={handleAddMovie} />
+      )}
+      {showUpdateForm ? (<UpdateMovieForm selectedMovie={selectedMovie} handleUpdateMovie={handleUpdateMovie} />
+      ) : (
+        view === 'details' && (
+          <MovieDetails selectedMovie={selectedMovie} handleDeleteMovie={handleDeleteMovie} showUpdateForm={setShowUpdateForm} />)
+      )}
     </div>
   );
 };
