@@ -89,13 +89,15 @@ const App = () => {
     }
   }
 
+  const filteredMovies = movieList.filter(movie => 
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    movie.director.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    movie.genre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    movie.year.toString().includes(searchQuery)
+  );
+
   return (
     <div>
-      {/* <nav>
-        <button onClick={() => setView('home')}>Home</button>
-        <button onClick={() => setView('list')}>Movie List</button>
-        <button onClick={() => setView('add')}>Add New Movie</button>
-      </nav> */}
       <nav className="navbar">
         <div className="hamburger" onClick={toggleMenu}>
           ☰ 
@@ -121,12 +123,12 @@ const App = () => {
             value={searchQuery}
             onChange={handleSearch} // Calls the handleSearch function when the input changes
           />
-        </div>
+      </div>
       {view === 'home' && (
         <HomePage />
       )}
       {view === 'list' && (
-        <MovieList movieList={movieList} setSelectedMovie={setSelectedMovie} setView={setView} />
+        <MovieList movieList={filteredMovies} setSelectedMovie={setSelectedMovie} setView={setView} />
       )}
       {view === 'add' && (
         <MovieForm handleAddMovie={handleAddMovie} />
