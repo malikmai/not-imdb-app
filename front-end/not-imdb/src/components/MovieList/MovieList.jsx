@@ -6,7 +6,9 @@ const MovieList = ({ movieList, setSelectedMovie, setView }) => {
     };
   
     return (
+    
       <div>
+        <hr />
         <ul>
           {movieList.map((movie) => (
             <li key={movie._id}>

@@ -14,11 +14,31 @@ const App = () => {
   const [view, setView] = useState('home');
   const [searchQuery, setSearchQuery] = useState(""); // Keeps track of the search query
   const [menuOpen, setMenuOpen] = useState(false); // Keeps track of whether the menu is open or closed
+  const [searchResult, setSearchResult] = useState(""); //Keeps track of search results and helps display a message when movie not found
 
 
-  const handleSearch = (event) => {
+  const handleSearchString = (event) => {
     setSearchQuery(event.target.value); // Updates the search query based on the input
   };
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const searchMovie = movieList.find(movie => 
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      movie.director.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      movie.genre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      movie.year.toString().includes(searchQuery)
+    );
+
+    if (searchMovie) {
+      setSelectedMovie(searchMovie);
+      setView('details');
+      setSearchResult("");
+      setSearchQuery("");
+    } else {
+      setSearchResult('Movie not found :(')
+    }
+  }
 
   const toggleMenu = (event) => {
     event.preventDefault();
@@ -89,12 +109,12 @@ const App = () => {
     }
   }
 
-  const filteredMovies = movieList.filter(movie => 
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    movie.director.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    movie.genre.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    movie.year.toString().includes(searchQuery)
-  );
+  // const filteredMovies = movieList.filter(movie => 
+  //   movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //   movie.director.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //   movie.genre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //   movie.year.toString().includes(searchQuery)
+  // );
 
   return (
     <div>
@@ -121,14 +141,16 @@ const App = () => {
             type="text"
             placeholder="Search Movies..."
             value={searchQuery}
-            onChange={handleSearch} // Calls the handleSearch function when the input changes
+            onChange={handleSearchString} // Calls the handleSearch function when the input changes
           />
+          <button onClick={handleSearch}>Search</button>
+          {searchResult && <p>{searchResult}</p>}
       </div>
       {view === 'home' && (
         <HomePage />
       )}
       {view === 'list' && (
-        <MovieList movieList={filteredMovies} setSelectedMovie={setSelectedMovie} setView={setView} />
+        <MovieList movieList={movieList} setSelectedMovie={setSelectedMovie} setView={setView} />
       )}
       {view === 'add' && (
         <MovieForm handleAddMovie={handleAddMovie} />

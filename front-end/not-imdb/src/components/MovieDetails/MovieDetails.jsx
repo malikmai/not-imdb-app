@@ -8,7 +8,8 @@ const MovieDetails = ({ selectedMovie, handleDeleteMovie, showUpdateForm }) => {
     }
   
     return (
-      <div>        
+      <div>
+        <hr />
         <h1>{selectedMovie.title}</h1>
         <h2>Directed By: {selectedMovie.director}</h2>
         <h2>Released: {selectedMovie.year}</h2>
