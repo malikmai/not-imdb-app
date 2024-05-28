@@ -1,47 +1,33 @@
-// const HomePage = ({movieList, setSelectedMovie}) => {
-// const movies = props.movieList.map((movie) => (
-//     <a key={movie._id} onClick={() => props.updateSelected(movie)}><li>{movie.title}</li></a>
-//     <li key={movie._id} onClick={() => props.updateSelected(movie)}><a>{movie.title}</a></li>
-// ));
+// const HomePage = ({ movieList, setSelectedMovie, setView }) => {
+//   const handleClick = (event, movie) => {
+//     event.preventDefault();
+//     setSelectedMovie(movie);
+//     setView('details');
+//   };
 
-//     const handleClick = (movie) => {
-//         setSelectedMovie(movie);
-//     }
-
-//     return (
-//         <div>
-//             <h1>Definitely Not IMDB</h1>
-//             <ul>{movieList.map((movie) => {return (<li key={movie._id}><a onClick={() => handleClick(movie)}>{movie.title}</a></li>)})}</ul>
-//         </div>
-//     )
-// }
+//   return (
+//     <div>
+//       <ul>
+//         {movieList.map((movie) => (
+//           <li key={movie._id}>
+//             <a href="#" onClick={(event) => handleClick(event, movie)}>
+//               {movie.title}
+//             </a>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
 
 // export default HomePage;
-// ---- Umang's code ----
+// ---- Umang's code ---- Moved to its own component MovieList ----
 
-//---- Malik's Updates ----
-import React, { useState, useEffect } from "react";
+// ---- Malik's Updates ----
+import { useState, useEffect } from "react";
 
-const HomePage = ({ movieList, setSelectedMovie }) => {
-  const [menuOpen, setMenuOpen] = useState(false); // Keeps track of whether the menu is open or closed
-  const [searchQuery, setSearchQuery] = useState(""); // Keeps track of the search query
+const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0); // Keeps track of the current slide
-
-  const handleClick = (movie) => {
-    setSelectedMovie(movie);
-  };
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen); // Toggles the menu open and closed
-  };
-
-  const handleSearch = (event) => {
-    setSearchQuery(event.target.value); // Updates the search query based on the input
-  };
-
-  const filteredMovies = movieList.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase()) // Filters the movies based on the search query
-  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,37 +45,8 @@ const HomePage = ({ movieList, setSelectedMovie }) => {
   ];
 
   return (
-    <div>
     <div className="theNavSection">
-      <nav className="navbar">
-        <div className="hamburger" onClick={toggleMenu}>
-          ☰ 
-        </div>
-        {menuOpen && (
-          <ul className="nav-links">
-            <li>
-              <a href="#add">Add New Movie</a>
-            </li>
-            <li>
-              <a href="#view">View Movies</a>
-            </li>
-            <li>
-              <a href="#update">Update Movies</a>
-            </li>
-          </ul>
-        )}
-        <div className="site-title">Definitely <i>not</i> IMDB</div>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search Movies..."
-            value={searchQuery}
-            onChange={handleSearch} // Calls the handleSearch function when the input changes
-          />
-        </div>
-      </nav>
-      <hr></hr>
-      </div>
+      <hr />
       <main>
         <div className="welcome-message">
             <h1>Welcome to Definitely <i>not</i> IMDB</h1>
