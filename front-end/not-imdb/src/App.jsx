@@ -4,6 +4,7 @@ import HomePage from "./components/HomePage/HomePage.jsx";
 import MovieDetails from "./components/MovieDetails/MovieDetails.jsx";
 import MovieForm from "./components/MovieForm/MovieForm.jsx";
 import UpdateMovieForm from "./components/UpdateMovieForm/UpdateMovieForm.jsx";
+import MovieList from "./components/MovieList/MovieList.jsx";
 
 const App = () => {
   const [movieList, setMovieList] = useState([]);
@@ -35,6 +36,7 @@ const App = () => {
       }
 
       setMovieList([newMovie, ...movieList]);
+      setView('list');
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +52,8 @@ const App = () => {
 
       setMovieList(movieList.map((movie) => (movie._id === movieId ? updateMovie : movie)));
       setSelectedMovie(updateMovie);
-      setShowUpdateForm(false)
+      setShowUpdateForm(false);
+      setView('details');
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +69,7 @@ const App = () => {
 
       setMovieList(movieList.filter((movie) => movie._id !== movieId));
       setSelectedMovie(null);
+      setView('list');
     } catch (error) {
       console.log(error);
     }
@@ -74,12 +78,16 @@ const App = () => {
   return (
     <div>
       <nav>
+        <button onClick={() => setView('home')}>Home</button>
         <button onClick={() => setView('list')}>Movie List</button>
         <button onClick={() => setView('add')}>Add New Movie</button>
       </nav>
       <h1>Definitely Not IMDB</h1>
+      {view === 'home' && (
+        <HomePage />
+      )}
       {view === 'list' && (
-        <HomePage movieList={movieList} setSelectedMovie={setSelectedMovie} setView={setView} />
+        <MovieList movieList={movieList} setSelectedMovie={setSelectedMovie} setView={setView} />
       )}
       {view === 'add' && (
         <MovieForm handleAddMovie={handleAddMovie} />
