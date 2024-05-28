@@ -5,12 +5,25 @@ import MovieDetails from "./components/MovieDetails/MovieDetails.jsx";
 import MovieForm from "./components/MovieForm/MovieForm.jsx";
 import UpdateMovieForm from "./components/UpdateMovieForm/UpdateMovieForm.jsx";
 import MovieList from "./components/MovieList/MovieList.jsx";
+// import './App.css'
 
 const App = () => {
   const [movieList, setMovieList] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [view, setView] = useState('home');
+  const [searchQuery, setSearchQuery] = useState(""); // Keeps track of the search query
+  const [menuOpen, setMenuOpen] = useState(false); // Keeps track of whether the menu is open or closed
+
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value); // Updates the search query based on the input
+  };
+
+  const toggleMenu = (event) => {
+    event.preventDefault();
+    setMenuOpen(!menuOpen); // Toggles the menu open and closed
+  };
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -37,6 +50,7 @@ const App = () => {
 
       setMovieList([newMovie, ...movieList]);
       setView('list');
+      setMenuOpen(false);
     } catch (error) {
       console.log(error);
     }
@@ -77,12 +91,37 @@ const App = () => {
 
   return (
     <div>
-      <nav>
+      {/* <nav>
         <button onClick={() => setView('home')}>Home</button>
         <button onClick={() => setView('list')}>Movie List</button>
         <button onClick={() => setView('add')}>Add New Movie</button>
+      </nav> */}
+      <nav className="navbar">
+        <div className="hamburger" onClick={toggleMenu}>
+          ☰ 
+        </div>
+        {menuOpen && (
+          <ul className="nav-links">
+            <li>
+              <a href="" onClick={(event) => {event.preventDefault(); setView('home'); setMenuOpen(false); }}>Home</a>
+            </li>
+            <li>
+              <a href="" onClick={(event) => {event.preventDefault(); setView('list'); setMenuOpen(false); }}>View Movies</a>
+            </li>
+            <li>
+              <a href="" onClick={(event) => {event.preventDefault(); setView('add'); setMenuOpen(false); }}>Add New Movie</a>
+            </li>
+          </ul>
+        )}
       </nav>
-      <h1>Definitely Not IMDB</h1>
+      <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search Movies..."
+            value={searchQuery}
+            onChange={handleSearch} // Calls the handleSearch function when the input changes
+          />
+        </div>
       {view === 'home' && (
         <HomePage />
       )}

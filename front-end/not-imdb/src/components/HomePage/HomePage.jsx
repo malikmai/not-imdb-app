@@ -27,17 +27,7 @@
 import { useState, useEffect } from "react";
 
 const HomePage = () => {
-  const [menuOpen, setMenuOpen] = useState(false); // Keeps track of whether the menu is open or closed
-  const [searchQuery, setSearchQuery] = useState(""); // Keeps track of the search query
   const [currentSlide, setCurrentSlide] = useState(0); // Keeps track of the current slide
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen); // Toggles the menu open and closed
-  };
-
-  const handleSearch = (event) => {
-    setSearchQuery(event.target.value); // Updates the search query based on the input
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -55,37 +45,8 @@ const HomePage = () => {
   ];
 
   return (
-    <div>
     <div className="theNavSection">
-      <nav className="navbar">
-        <div className="hamburger" onClick={toggleMenu}>
-          ☰ 
-        </div>
-        {menuOpen && (
-          <ul className="nav-links">
-            <li>
-              <a href="#add">Add New Movie</a>
-            </li>
-            <li>
-              <a href="#view">View Movies</a>
-            </li>
-            <li>
-              <a href="#update">Update Movies</a>
-            </li>
-          </ul>
-        )}
-        <div className="site-title">Definitely <i>not</i> IMDB</div>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search Movies..."
-            value={searchQuery}
-            onChange={handleSearch} // Calls the handleSearch function when the input changes
-          />
-        </div>
-      </nav>
-      <hr></hr>
-      </div>
+      <hr />
       <main>
         <div className="welcome-message">
             <h1>Welcome to Definitely <i>not</i> IMDB</h1>
