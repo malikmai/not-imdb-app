@@ -19,6 +19,7 @@ const MovieForm = ({ handleAddMovie }) => {
 
     return (
         <div>
+            <hr />
             <form onSubmit={handleSubmit}>
                 <label htmlFor="title"> Title </label>
                 <input
