@@ -6,17 +6,16 @@ const MovieList = ({ movieList, setSelectedMovie, setView }) => {
   };
 
   return (
-    <div>
-      <hr />
-      <ul>
-        {movieList.map((movie) => (
-          <li key={movie._id}>
-            <a href="#" onClick={(event) => handleClick(event, movie)}>
-              {movie.title}
-            </a>
-          </li>
-        ))}
-      </ul>
+    <div className="movie-list">
+      {movieList.map((movie) => (
+        <div key={movie._id} className="movie-card" onClick={(event) => handleClick(event, movie)}>
+          <img src={movie.poster} alt={movie.title} />
+          <div className="movie-info">
+            <h3>{movie.title}</h3>
+            <p>{movie.year}</p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
