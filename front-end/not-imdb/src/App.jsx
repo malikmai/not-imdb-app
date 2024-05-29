@@ -6,6 +6,7 @@ import MovieForm from "./components/MovieForm/MovieForm.jsx";
 import UpdateMovieForm from "./components/UpdateMovieForm/UpdateMovieForm.jsx";
 import MovieList from "./components/MovieList/MovieList.jsx";
 import DeleteConfirmation from "./components/DeleteConfirmation/DeleteConfirmation.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 import './App.css'
 
 const App = () => {
@@ -168,6 +169,7 @@ const App = () => {
       {view === 'delete' && (
         <DeleteConfirmation selectedMovie={selectedMovie} handleDeleteMovie={handleDeleteMovie} setView={setView} />
       )}
+       <Footer />
     </div>
   );
 };
