@@ -37,11 +37,19 @@ const HomePage = () => {
   }, []);
 
   const placeholderImages = [
-    "https://via.placeholder.com/400x200?text=Movie+1", // Placeholder image URLs
-    "https://via.placeholder.com/400x200?text=Movie+2",
-    "https://via.placeholder.com/400x200?text=Movie+3",
-    "https://via.placeholder.com/400x200?text=Movie+4",
-    "https://via.placeholder.com/400x200?text=Movie+5"
+    "https://film-grab.com/wp-content/uploads/2019/11/Star-Wars-The-Phantom-Menace-050.jpg",
+    "https://variety.com/wp-content/uploads/2013/05/bladerunner_sequel.jpg",
+    "https://film-grab.com/wp-content/uploads/photo-gallery/imported_from_media_libray/thematrix015.jpg?bwg=1546895512",
+    "https://images5.alphacoders.com/681/thumbbig-681188.webp",
+    "https://images2.minutemediacdn.com/image/upload/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/57f586e0f2ad8b86abf5543de84abe362bb4ec711fe6a2b44226a84e0fed16d8.jpg"
+  ];
+  
+  const movieNames = [
+    "Star Wars: The Phantom Menace",
+    "Blade Runner",
+    "The Matrix",
+    "Gladiator",
+    "Jurassic Park"
   ];
 
   return (
@@ -49,14 +57,18 @@ const HomePage = () => {
       <hr />
       <main>
         <div className="welcome-message">
-            <h1>Welcome to Definitely <i>not</i> IMDB</h1>
-            <p>Your one-stop shop for all things movies!</p>
+          <h1>Welcome to Definitely <i>not</i> IMDB</h1>
+          <p>Your one-stop shop for all things movies!</p>
         </div>
         <div className="show-card">
           <img
             src={placeholderImages[currentSlide]}
-            alt={`Slide ${currentSlide + 1}`} // Displays the current slide image
+            alt={`Slide ${currentSlide + 1}`}
+            className="resized-image" // Apply the resized-image class here
           />
+          <div className="text-box">
+            <p>{movieNames[currentSlide]}</p>
+          </div>
         </div>
       </main>
     </div>
