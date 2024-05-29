@@ -5,6 +5,7 @@ import MovieDetails from "./components/MovieDetails/MovieDetails.jsx";
 import MovieForm from "./components/MovieForm/MovieForm.jsx";
 import UpdateMovieForm from "./components/UpdateMovieForm/UpdateMovieForm.jsx";
 import MovieList from "./components/MovieList/MovieList.jsx";
+import DeleteConfirmation from "./components/DeleteConfirmation/DeleteConfirmation.jsx";
 import './App.css'
 
 const App = () => {
@@ -107,6 +108,10 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleDeleteConfirmation = () => {
+    setView('delete');
   }
 
   // const filteredMovies = movieList.filter(movie => 
@@ -158,7 +163,10 @@ const App = () => {
       {showUpdateForm ? (<UpdateMovieForm selectedMovie={selectedMovie} handleUpdateMovie={handleUpdateMovie} />
       ) : (
         view === 'details' && (
-          <MovieDetails selectedMovie={selectedMovie} handleDeleteMovie={handleDeleteMovie} showUpdateForm={setShowUpdateForm} />)
+          <MovieDetails selectedMovie={selectedMovie} showUpdateForm={setShowUpdateForm} handleDeleteConfirmation={handleDeleteConfirmation} />)
+      )}
+      {view === 'delete' && (
+        <DeleteConfirmation selectedMovie={selectedMovie} handleDeleteMovie={handleDeleteMovie} setView={setView} />
       )}
     </div>
   );
