@@ -5,7 +5,7 @@ import MovieDetails from "./components/MovieDetails/MovieDetails.jsx";
 import MovieForm from "./components/MovieForm/MovieForm.jsx";
 import UpdateMovieForm from "./components/UpdateMovieForm/UpdateMovieForm.jsx";
 import MovieList from "./components/MovieList/MovieList.jsx";
-// import './App.css'
+import './App.css'
 
 const App = () => {
   const [movieList, setMovieList] = useState([]);
