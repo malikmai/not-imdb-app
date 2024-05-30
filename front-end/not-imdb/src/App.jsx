@@ -10,19 +10,20 @@ import Footer from "./components/Footer/Footer.jsx";
 import './App.css'
 
 const App = () => {
-  const [movieList, setMovieList] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [showUpdateForm, setShowUpdateForm] = useState(false);
-  const [view, setView] = useState('home');
-  const [searchQuery, setSearchQuery] = useState(""); // Keeps track of the search query
+  const [movieList, setMovieList] = useState([]); // List of all movies
+  const [selectedMovie, setSelectedMovie] = useState(null); // Currently selected movie
+  const [showUpdateForm, setShowUpdateForm] = useState(false); // Toggle for update form visibility
+  const [view, setView] = useState('home'); // Current view state
+  const [searchQuery, setSearchQuery] = useState(""); // Keeps track of the search query input
   const [menuOpen, setMenuOpen] = useState(false); // Keeps track of whether the menu is open or closed
   const [searchResult, setSearchResult] = useState(""); //Keeps track of search results and helps display a message when movie not found
 
-
+  // Handle search input change
   const handleSearchString = (event) => {
     setSearchQuery(event.target.value); // Updates the search query based on the input
   };
 
+  // Handle search button click
   const handleSearch = (event) => {
     event.preventDefault();
     const searchMovie = movieList.find(movie => 
@@ -42,11 +43,13 @@ const App = () => {
     }
   }
 
+  // Toggle menu open/close
   const toggleMenu = (event) => {
     event.preventDefault();
-    setMenuOpen(!menuOpen); // Toggles the menu open and closed
+    setMenuOpen(!menuOpen);
   };
 
+  // Fetches all movies from the backend
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -62,6 +65,7 @@ const App = () => {
     fetchMovies();
   }, []);
 
+  // Handles adding a new movie
   const handleAddMovie = async (FormData) => {
     try {
       const newMovie = await movieService.create(FormData);
@@ -78,6 +82,7 @@ const App = () => {
     }
   };
 
+  // Handles updating the selected movie
   const handleUpdateMovie = async (FormData, movieId) => {
     try {
       const updateMovie = await movieService.update(FormData, movieId);
@@ -95,6 +100,7 @@ const App = () => {
     }
   };
 
+  // Handles deleting a movie
   const handleDeleteMovie = async (movieId) => {
     try {
       const deleteMovie = await movieService.remove(movieId);
@@ -111,6 +117,7 @@ const App = () => {
     }
   };
 
+  // Shows delete confirmation page
   const handleDeleteConfirmation = () => {
     setView('delete');
   }
@@ -124,6 +131,7 @@ const App = () => {
 
   return (
     <div>
+      {/* Code for hamburger navigation menu */}
       <nav className="navbar">
         <div className="hamburger" onClick={toggleMenu}>
           ☰ 
@@ -142,6 +150,8 @@ const App = () => {
           </ul>
         )}
       </nav>
+
+      {/* Code for the search bar */}
       <div className="search-bar">
           <input
             type="text"
@@ -152,21 +162,35 @@ const App = () => {
           <button onClick={handleSearch}>Search</button>
           {searchResult && <p>{searchResult}</p>}
       </div>
+
+      {/* Conditional rendering based on current view */}
       {view === 'home' && (
+        // Render the HomePage component when the current view is 'home'
         <HomePage />
       )}
       {view === 'list' && (
+        // Render the MovieList component when the current view is 'list'
+        // Pass movieList, setSelectedMovie, and setView as props
         <MovieList movieList={movieList} setSelectedMovie={setSelectedMovie} setView={setView} />
       )}
       {view === 'add' && (
+        // Render the MovieForm component when the current view is 'add'
+        // Pass handleAddMovie as a prop
         <MovieForm handleAddMovie={handleAddMovie} />
       )}
-      {showUpdateForm ? (<UpdateMovieForm selectedMovie={selectedMovie} handleUpdateMovie={handleUpdateMovie} />
+      {showUpdateForm ? (
+      // Render the UpdateMovieForm component if showUpdateForm is true
+      // Pass selectedMovie and handleUpdateMovie as props
+      <UpdateMovieForm selectedMovie={selectedMovie} handleUpdateMovie={handleUpdateMovie} />
       ) : (
         view === 'details' && (
-          <MovieDetails selectedMovie={selectedMovie} showUpdateForm={setShowUpdateForm} handleDeleteConfirmation={handleDeleteConfirmation} />)
+          // Render the MovieDetails component when the current view is 'details'
+          // Pass selectedMovie, showUpdateForm, handleDeleteConfirmation, and setView as prop
+          <MovieDetails selectedMovie={selectedMovie} showUpdateForm={setShowUpdateForm} handleDeleteConfirmation={handleDeleteConfirmation} setView={setView} />)
       )}
       {view === 'delete' && (
+        // Render the DeleteConfirmation component when the current view is 'delete'
+        // Pass selectedMovie, handleDeleteMovie, and setView as props
         <DeleteConfirmation selectedMovie={selectedMovie} handleDeleteMovie={handleDeleteMovie} setView={setView} />
       )}
        <Footer />
