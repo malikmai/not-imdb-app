@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 const UpdateMovieForm = ({ selectedMovie, handleUpdateMovie }) => {
+    // Inititializes form with empty values
   const [formData, setFormData] = useState({
     title: '',
     director: '',
@@ -9,6 +10,7 @@ const UpdateMovieForm = ({ selectedMovie, handleUpdateMovie }) => {
     poster: '', // Added poster field
   });
 
+  // Sets form data when selectedMovie changes
   useEffect(() => {
     if (selectedMovie) {
       setFormData({
@@ -21,13 +23,14 @@ const UpdateMovieForm = ({ selectedMovie, handleUpdateMovie }) => {
     }
   }, [selectedMovie]);
 
+  // Handles form data change by using the spread operatyor to create a new object and updates its values accordingly
   const handleUpdate = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleUpdateMovie(formData, selectedMovie._id);
+    handleUpdateMovie(formData, selectedMovie._id); 
   };
 
   return (

@@ -29,6 +29,7 @@ import { useState, useEffect } from "react";
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0); // Keeps track of the current slide
 
+  // useEffect hook to set up an interval for changing slides every 6 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % 5); // Loops through the 5 slides, %5 ensures it doesn't go over 5
@@ -36,6 +37,7 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Movie images
   const placeholderImages = [
     "https://film-grab.com/wp-content/uploads/2019/11/Star-Wars-The-Phantom-Menace-050.jpg",
     "https://variety.com/wp-content/uploads/2013/05/bladerunner_sequel.jpg",
@@ -44,6 +46,7 @@ const HomePage = () => {
     "https://images2.minutemediacdn.com/image/upload/c_fill,w_720,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/57f586e0f2ad8b86abf5543de84abe362bb4ec711fe6a2b44226a84e0fed16d8.jpg"
   ];
   
+  // Movie names corresponding to the images
   const movieNames = [
     "Star Wars: The Phantom Menace",
     "Blade Runner",
@@ -60,9 +63,11 @@ const HomePage = () => {
           <h1>Welcome to Definitely <i>not</i> IMDB</h1>
           <p>Your one-stop shop for all things movies!</p>
         </div>
+
+        {/* Carousel section */}
         <div className="show-card">
           <img
-            src={placeholderImages[currentSlide]}
+            src={placeholderImages[currentSlide]} 
             alt={`Slide ${currentSlide + 1}`}
             className="resized-image" // Apply the resized-image class here
           />
